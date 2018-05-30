@@ -20,6 +20,7 @@ class OAuthViewController: UIViewController, WKNavigationDelegate, WKUIDelegate 
         let webConfiguration = WKWebViewConfiguration()
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView.uiDelegate = self
+        webView.navigationDelegate = self
         view = webView
     }
     
@@ -41,12 +42,33 @@ class OAuthViewController: UIViewController, WKNavigationDelegate, WKUIDelegate 
       
         webView.load(request)
         
-        print ( oauthState ?? "state nil" )
+        
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        guard let url = navigationAction.request.url else { return }
+            
+        if let host = url.host, host == "andriuskelly.com" {
+            
+            print( url.valueOf(queryParameter: "state") ?? "no state" )
+            print ( oauthState ?? "state nil" )
+            print ( url.valueOf(queryParameter: "code") ?? "no code")
+            
+            decisionHandler(.cancel)
+            
+        }
+        
+        decisionHandler(.allow)
+    }
+}
+
+// extension from: https://stackoverflow.com/questions/41421686/get-the-value-of-url-parameters?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+extension URL {
+    func valueOf(queryParameter: String) -> String? {
+        guard  let url = URLComponents.init(string: self.absoluteString ) else { return nil }
+        
+        return url.queryItems?.first(where: { $0.name == queryParameter})?.value
     }
 }
 
