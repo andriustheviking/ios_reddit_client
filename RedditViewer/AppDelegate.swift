@@ -88,6 +88,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    //MARK: - Web UI Delegate
+
 
 }
 
