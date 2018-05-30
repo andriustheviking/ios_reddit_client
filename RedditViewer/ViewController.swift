@@ -8,20 +8,34 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, OAuthCredentialDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func receivedCredentials(state: String?, code: String? ){
+        print( "State: " + ( state ?? "nil" ) )
+        print ( "Code: " + (code ?? "nil"))
     }
-
-
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let id = segue.identifier else {return}
+        switch id {
+            case "getAuthorization":
+                let vc : OAuthViewController = segue.destination as! OAuthViewController
+                vc.credentialDelegate = self
+                
+            default:
+                break;
+        }
+    }
+    
 }
+
+
 
 
 

@@ -33,7 +33,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="atU-Pi-zWF" kind="show" id="XTo-vA-uGB"/>
+                                    <segue destination="atU-Pi-zWF" kind="show" identifier="getAuthorization" id="XTo-vA-uGB"/>
                                 </connections>
                             </button>
                         </subviews>
