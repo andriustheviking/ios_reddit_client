@@ -10,51 +10,63 @@ import Foundation
 import UIKit
 
 
-class AuthorizationToken {
+//closure design: https://stackoverflow.com/questions/43048120/swift-return-data-from-urlsession?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+
+struct OAuthToken {
+    var token_type: String
+    var refresh_token: String
+    var scope: String
+    var access_token: String
+    var expires_in: Int
     
-    func retrieveToken(withCode code: String)  -> [String:Any]? {
+    init?(json: [String: Any]) {
         
-        let clientId = oauthSecret.clientId
-        let secret = oauthSecret.secret
-        let redirectURI = oauthSecret.redirectURI
-        let userAgent = oauthSecret.userAgent
+        guard let token =   json["token_type"]  as? String      else { return nil }
+        guard let refresh = json["refresh_token"] as? String    else { return nil }
+        guard let scope =   json["scope"]  as? String           else { return nil }
+        guard let access =  json["access_token"] as? String     else { return nil }
+        guard let expires = json["expires_in"] as? Int          else { return nil }
         
+        token_type = token
+        refresh_token = refresh
+        self.scope = scope
+        access_token = access
+        expires_in = expires
+    }
+}
+
+class AuthorizationToken {
+
+    //retrieves json [String:Any] via POST request and passes it via completion block
+    static func retrieveToken(withCode code: String, completionBlock: @escaping ([String : Any]) -> Void) {
         
-        //get oauth token
-        //let url = URL.init(string: "https://www.reddit.com/api/v1/access_token")
-        let url = URL.init(string: "http://localhost:8080/print")
         let session = URLSession.shared
-        var request = URLRequest(url: url!)
-        
-        request.httpMethod = "POST"
-        
-        let userPass = "\(clientId):\(secret)"
-        guard let base64UserPass: String = (userPass.data(using: .utf8)?.base64EncodedString()) else { return nil }
-        
-        request.setValue("Basic \(base64UserPass)", forHTTPHeaderField: "Authorization")
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
-        
-        let postBody = "grant_type=authorization_code&code=\(code)&redirect_uri=\(redirectURI)"
-        request.httpBody = postBody.data(using: .utf8)
-        
+        guard let request = RedditSpecs.authTokenRequest(forCode: code) else {return}
+
         
         let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error  in
-            
-            guard error == nil else { return }
-            guard let data = data else { return }
-            do {
 
-                if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String:Any] {
-                    
+            guard error == nil else { return }
+            
+            guard let data = data else { return }
+            
+            do {
+                let jsonSerialized = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Any]
+                
+                if let json = jsonSerialized {
+                    print("calling completion block:")
+                    completionBlock(json)
                 }
+                else {
+                    print ("could not unwrap json")
+                }
+                
             } catch let error {
                 //is error blocking code?
-                print(error.localizedDescription )
-                
+                print(error.localizedDescription)
             }
         })
+        
         task.resume()
-        return nil
     }
 }

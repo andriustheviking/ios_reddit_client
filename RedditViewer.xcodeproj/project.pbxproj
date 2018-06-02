@@ -18,6 +18,8 @@
 		09A844C620B77F65008371CC /* secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A844C520B77F65008371CC /* secret.swift */; };
 		09A844C820B780B2008371CC /* OAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A844C720B780B2008371CC /* OAuthViewController.swift */; };
 		09CA59A920C22CB30053D006 /* AuthorizationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CA59A820C22CB30053D006 /* AuthorizationToken.swift */; };
+		09D0C31220C231F3002AAA09 /* APICredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0C31120C231F3002AAA09 /* APICredentials.swift */; };
+		09D0C31420C23948002AAA09 /* APISpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0C31320C23948002AAA09 /* APISpecs.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		09A844C520B77F65008371CC /* secret.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = secret.swift; sourceTree = "<group>"; };
 		09A844C720B780B2008371CC /* OAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthViewController.swift; sourceTree = "<group>"; };
 		09CA59A820C22CB30053D006 /* AuthorizationToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationToken.swift; sourceTree = "<group>"; };
+		09D0C31120C231F3002AAA09 /* APICredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APICredentials.swift; sourceTree = "<group>"; };
+		09D0C31320C23948002AAA09 /* APISpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APISpecs.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,8 @@
 				09A844B020B77EA4008371CC /* AppDelegate.swift */,
 				09A844B220B77EA4008371CC /* ViewController.swift */,
 				09A844C520B77F65008371CC /* secret.swift */,
+				09D0C31120C231F3002AAA09 /* APICredentials.swift */,
+				09D0C31320C23948002AAA09 /* APISpecs.swift */,
 				09A844B420B77EA4008371CC /* Main.storyboard */,
 				0939885520C0C0A900EBE8ED /* RedditPostTableCell.swift */,
 				0939885620C0C0A900EBE8ED /* RedditPostTableCell.xib */,
@@ -157,7 +163,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0939885720C0C0A900EBE8ED /* RedditPostTableCell.swift in Sources */,
+				09D0C31220C231F3002AAA09 /* APICredentials.swift in Sources */,
 				09CA59A920C22CB30053D006 /* AuthorizationToken.swift in Sources */,
+				09D0C31420C23948002AAA09 /* APISpecs.swift in Sources */,
 				09A844B320B77EA4008371CC /* ViewController.swift in Sources */,
 				09A844C620B77F65008371CC /* secret.swift in Sources */,
 				09A844B120B77EA4008371CC /* AppDelegate.swift in Sources */,
