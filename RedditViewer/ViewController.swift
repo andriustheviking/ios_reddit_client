@@ -15,10 +15,16 @@ class ViewController: UIViewController, OAuthCredentialDelegate {
         // Do any additional setup after loading the view, typically from a nib.
     }
 
-    func receivedCredentials(state: String?, code: String? ){
-        print( "State: " + ( state ?? "nil" ) )
-        print ( "Code: " + (code ?? "nil"))
+    //retrieves OAuth Tolen with code
+    func receivedCredentials(token: String? ){
+
+        print ( "token: " + (token ?? "nil"))
+        
     }
+    
+    
+    //TODO: Populate table with reddit post
+    
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -32,10 +38,7 @@ class ViewController: UIViewController, OAuthCredentialDelegate {
                 break;
         }
     }
-    
 }
-
-
 
 
 
