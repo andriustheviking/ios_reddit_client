@@ -17,7 +17,7 @@ class ViewController: UIViewController, OAuthCredentialDelegate {
         // Do any additional setup after loading the view, typically from a nib.
     }
 
-    //retrieves OAuth Tolen with code
+    //delegate retrieves OAuth Token with code
     func receivedCredentials(code: String? ){
         
         if let code = code {
