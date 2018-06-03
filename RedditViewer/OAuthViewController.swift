@@ -40,7 +40,7 @@ class OAuthViewController: UIViewController, WKNavigationDelegate, WKUIDelegate 
         
         if let state = oauthState {
     
-            let oauthURL = RedditSpecs.authRequestUrl(withState: state)
+            let oauthURL = APISpecs.authRequestUrl(withState: state)
             let request = URLRequest(url: oauthURL)
             webView.load(request)
         }

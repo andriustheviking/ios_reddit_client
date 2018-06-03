@@ -16,47 +16,26 @@ class ViewController: UIViewController, OAuthCredentialDelegate {
         super.viewDidLoad()
         print("viewDidLoad fired")
     }
-    
-
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("viewWillAppear fired")
     }
-    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         print("viewWillLayoutSubviews fired")
     }
 
-    //delegate retrieves OAuth Token with code
-    func receivedCredentials(code: String? ){
-        
-        if let code = code {
-            print ( "code: " + code)
-        
-            //pass token to retrieveToken func via closure
-            AuthorizationToken.retrieveToken(withCode: code) { json in
-                print ("inside completion block:")
-                self.token = OAuthToken(json: json)
-                
-                //t creates reference loop
-                if let t = self.token?.access_token {
-                    print("Token="+t)
-                }
-                else {
-                    print("Token=nil")
-                }
-                
-                //update UI with token
-            }
+
+    
+    @IBAction func something(_ sender: UIBarButtonItem) {
+        if let t = token?.access_token {
+            print("Token="+t)
+        }
+        else {
+            print("Token=nil")
         }
     }
-    
-    
-    func saveToken(jsonResponse: [String:Any]?) {
-        
-    }
+
     
     
     //TODO: Populate table with reddit post
@@ -77,38 +56,42 @@ class ViewController: UIViewController, OAuthCredentialDelegate {
     }
 }
 
+
+//MARK - Request Reddit Data 
 extension ViewController {
-     func retrieveToken(withCode code: String, completionBlock: @escaping (Data) -> Void) {
+    
+    
+    //delegate retrieves OAuth Token with code
+    func receivedCredentials(code: String? ){
         
-        let session = URLSession.shared
-        guard let request = RedditSpecs.authTokenRequest(forCode: code) else {return}
-        
-        
-        let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error  in
+        if let code = code {
             
-            guard error == nil else { return }
-            
-            guard let data = data else { return }
-            
-            do {
-                if let jsonResponse = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String:String] {
-                    print("in function call:")
-                    print (jsonResponse)
+            //store json response for token via closure
+            APICalls.getJSON(via: APISpecs.tokenRequest(code: code)) { json in
+                print ("inside completion block:")
+                print (json)
+                self.token = OAuthToken(json: json)
+                
+                //t creates reference loop
+                if let t = self.token?.access_token {
+                    print("Token="+t)
                 }
                 else {
-                    print ("could not objectify json")
+                    print("Token=nil")
                 }
                 
-            } catch let error {
-                //is error blocking code?
-                print(error.localizedDescription)
+                //update UI with token
             }
-            
-            print("task closure executed")
-        })
-        
-        task.resume()
+        }
     }
+}
+
+
+//MARK - Populate Table
+extension ViewController {
+    
+    
+    
 }
 
 

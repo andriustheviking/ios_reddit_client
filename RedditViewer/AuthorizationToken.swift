@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-//closure design: https://stackoverflow.com/questions/43048120/swift-return-data-from-urlsession?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+
 
 class OAuthToken {
     var token_type: String
@@ -35,38 +35,3 @@ class OAuthToken {
     }
 }
 
-class AuthorizationToken {
-
-    //retrieves json [String:Any] via POST request and passes it via completion block
-    static func retrieveToken(withCode code: String, completionBlock: @escaping ([String : Any]) -> Void) {
-        
-        let session = URLSession.shared
-        guard let request = RedditSpecs.authTokenRequest(forCode: code) else {return}
-
-        
-        let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error  in
-
-            guard error == nil else { return }
-            
-            guard let data = data else { return }
-            
-            do {
-                let jsonSerialized = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Any]
-                
-                if let json = jsonSerialized {
-                    print("calling completion block:")
-                    completionBlock(json)
-                }
-                else {
-                    print ("could not unwrap json")
-                }
-                
-            } catch let error {
-                //is error blocking code?
-                print(error.localizedDescription)
-            }
-        })
-        
-        task.resume()
-    }
-}
