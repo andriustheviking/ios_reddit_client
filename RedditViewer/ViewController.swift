@@ -14,7 +14,19 @@ class ViewController: UIViewController, OAuthCredentialDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        print("viewDidLoad fired")
+    }
+    
+
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("viewWillAppear fired")
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        print("viewWillLayoutSubviews fired")
     }
 
     //delegate retrieves OAuth Token with code
@@ -23,16 +35,20 @@ class ViewController: UIViewController, OAuthCredentialDelegate {
         if let code = code {
             print ( "code: " + code)
         
+            //pass token to retrieveToken func via closure
             AuthorizationToken.retrieveToken(withCode: code) { json in
                 print ("inside completion block:")
-                
                 self.token = OAuthToken(json: json)
+                
+                //t creates reference loop
                 if let t = self.token?.access_token {
-                    print("token:"+t)
+                    print("Token="+t)
                 }
                 else {
-                    print("could not get token")
+                    print("Token=nil")
                 }
+                
+                //update UI with token
             }
         }
     }
@@ -42,10 +58,12 @@ class ViewController: UIViewController, OAuthCredentialDelegate {
         
     }
     
+    
     //TODO: Populate table with reddit post
     
     
     
+    //MARK: - Segue Handler
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let id = segue.identifier else {return}
         switch id {

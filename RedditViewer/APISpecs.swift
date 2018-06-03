@@ -22,8 +22,8 @@ class RedditSpecs {
     //builds the URL POST request for the OAuth Token
     static func authTokenRequest(forCode code: String) -> URLRequest? {
         
-        //let url = URL.init(string: "https://www.reddit.com/api/v1/access_token")
-        let url = URL.init(string: "http://localhost:8080/print")
+        let url = URL.init(string: "https://www.reddit.com/api/v1/access_token")
+//        let url = URL.init(string: "http://localhost:8080/print")
         
         var request = URLRequest(url: url!)
         

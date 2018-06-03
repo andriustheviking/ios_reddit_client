@@ -12,12 +12,12 @@ import UIKit
 
 //closure design: https://stackoverflow.com/questions/43048120/swift-return-data-from-urlsession?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
 
-struct OAuthToken {
+class OAuthToken {
     var token_type: String
     var refresh_token: String
     var scope: String
-    var access_token: String
     var expires_in: Int
+    var access_token: String
     
     init?(json: [String: Any]) {
         
