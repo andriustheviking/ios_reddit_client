@@ -21,7 +21,15 @@ class APICalls {
     
     static func redditRequest(endpoint: String, token: String?, method:String="GET", body:String="") -> URLRequest {
         
-        let url = URL.init(string: "https://www.reddit.com/" + endpoint)
+        let host: String
+        
+        if let _  = token {
+            host = "https://oauth.reddit.com"
+        } else {
+            host = "https://www.reddit.com"
+        }
+        
+        let url = URL.init(string: host + endpoint)
         
         var request = URLRequest(url: url!)
         

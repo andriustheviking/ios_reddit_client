@@ -35,7 +35,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Nre-bL-YLF">
-                        <barButtonItem key="leftBarButtonItem" title="Print Token" id="82X-rg-7tm">
+                        <barButtonItem key="leftBarButtonItem" title="Print" id="82X-rg-7tm">
                             <connections>
                                 <action selector="something:" destination="BYZ-38-t0r" id="5bY-Zk-tiO"/>
                             </connections>

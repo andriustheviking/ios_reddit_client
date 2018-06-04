@@ -16,7 +16,7 @@ class OAuthToken {
     var token_type: String
     var refresh_token: String
     var scope: String
-    var expires_in: Int
+    var expires_in: Date
     var access_token: String
     
     init?(json: [String: Any]) {
@@ -25,13 +25,14 @@ class OAuthToken {
         guard let refresh = json["refresh_token"] as? String    else { return nil }
         guard let scope =   json["scope"]  as? String           else { return nil }
         guard let access =  json["access_token"] as? String     else { return nil }
-        guard let expires = json["expires_in"] as? Int          else { return nil }
-        
+        guard let seconds = json["expires_in"] as? Double       else { return nil }
+
+        expires_in = Date.init(timeIntervalSinceNow: seconds )
         token_type = token
         refresh_token = refresh
         self.scope = scope
         access_token = access
-        expires_in = expires
+        
     }
 }
 

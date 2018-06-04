@@ -7,10 +7,58 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController, OAuthCredentialDelegate {
 
-    var token: OAuthToken?
+    var token: OAuthToken? {
+        //update Account info
+        didSet {
+            //make sure not nil
+            guard let tkn = token else { return }
+            
+            //store user info as asynchronous Background GCD task
+            DispatchQueue.global(qos: .background).async {
+                [weak tkn] in
+                //get context
+
+                //get username from reddit
+                APICalls.getJSON(via: APICalls.redditRequest(endpoint: "/api/v1/me", token: tkn?.access_token )){ json in
+
+                    guard let username = json["name"] as? String else {return}
+
+                    let dbContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                    
+                    let accountFetch = NSFetchRequest<NSManagedObject>(entityName: "Account")
+                    accountFetch.predicate = NSPredicate(format: "username == %@", username)
+                    
+                    var results: [NSManagedObject] = []
+                    
+                    do {
+                        results = try dbContext.fetch(accountFetch)
+                    } catch {
+                        print("error fetching accounts from coredata")
+                        return
+                    }
+                    
+                    //set account to either the first or a new account if none
+                    let account = results.first as? Account ?? Account(context: dbContext)
+
+                    //update account info
+                    account.username = username
+                    account.refresh_token = tkn?.refresh_token
+                    account.expires = tkn?.expires_in as NSDate?
+                    account.token = tkn?.access_token
+                    
+                    (UIApplication.shared.delegate as! AppDelegate).saveContext()
+                    
+                    print("account saved")
+                    
+                    return
+                }
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,12 +76,33 @@ class ViewController: UIViewController, OAuthCredentialDelegate {
 
     
     @IBAction func something(_ sender: UIBarButtonItem) {
-        if let t = token?.access_token {
-            print("Token="+t)
+        
+        
+        guard let tok = token?.access_token else { return }
+        
+        let dbContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        
+        let accountFetch = NSFetchRequest<NSManagedObject>(entityName: "Account")
+        accountFetch.predicate = NSPredicate(format: "token == %@", tok)
+        
+        var results: [NSManagedObject] = []
+        
+        do {
+            results = try dbContext.fetch(accountFetch)
+            if let account = results.first as? Account{
+                print("user: \(account.username) saved in coredata")
+            }else {
+                print ("could not find username with token: \(tok)")
+            }
+            
+        } catch {
+            print("error fetching accounts from coredata")
+            return
         }
-        else {
-            print("Token=nil")
-        }
+        
+
+        
+//        getSubreddits()
     }
 
     
@@ -62,11 +131,15 @@ extension ViewController {
     
     //request front page
     func getSubreddits(){
-        if let accessToken = token?.access_token {
+        
+//        let json: [String: Any]
+        
+        APICalls.getJSON(via: APICalls.redditRequest(endpoint: "/subreddits/mine.json", token: token?.access_token )){
+            json in
             
-        }
-        else {
+            print (json)
             
+            return
         }
     }
     
