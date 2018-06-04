@@ -60,6 +60,9 @@ class ViewController: UIViewController, OAuthCredentialDelegate {
 //MARK - Request Reddit Data 
 extension ViewController {
     
+    //request front page
+    
+    
     
     //delegate retrieves OAuth Token with code
     func receivedCredentials(code: String? ){
@@ -67,13 +70,16 @@ extension ViewController {
         if let code = code {
             
             //store json response for token via closure
-            APICalls.getJSON(via: APISpecs.tokenRequest(code: code)) { json in
-                print ("inside completion block:")
+            APICalls.getJSON(via: APISpecs.tokenRequest(code: code)) {
+                [weak self] json in
+                
+                //TODO handle errors from reddit
+                
                 print (json)
-                self.token = OAuthToken(json: json)
+                self?.token = OAuthToken(json: json)
                 
                 //t creates reference loop
-                if let t = self.token?.access_token {
+                if let t = self?.token?.access_token {
                     print("Token="+t)
                 }
                 else {
@@ -89,6 +95,8 @@ extension ViewController {
 
 //MARK - Populate Table
 extension ViewController {
+    
+    //make request for front page
     
     
     
