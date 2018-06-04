@@ -19,6 +19,9 @@ class APICalls {
     }
     
     
+    
+    //makes a restful request to reddit's api.
+    //host is automatically determined by token presence
     static func redditRequest(endpoint: String, token: String?, method:String="GET", body:String="") -> URLRequest {
         
         let host: String
@@ -43,29 +46,6 @@ class APICalls {
         request.setValue(Credentials.userAgent, forHTTPHeaderField: "User-Agent")
         
         request.httpBody = body.data(using: .utf8)
-        
-        return request
-    }
-    
-    
-    //builds the URL POST request for the OAuth Token
-    static func tokenRequest(code: String) -> URLRequest? {
-        
-        let url = URL.init(string: "https://www.reddit.com/api/v1/access_token")
-        
-        var request = URLRequest(url: url!)
-        
-        request.httpMethod = "POST"
-        
-        let userPass = "\(Credentials.clientId):\(Credentials.secret)"
-        guard let base64UserPass: String = (userPass.data(using: .utf8)?.base64EncodedString()) else { return nil }
-        
-        request.setValue("Basic \(base64UserPass)", forHTTPHeaderField: "Authorization")
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.setValue(Credentials.userAgent, forHTTPHeaderField: "User-Agent")
-        
-        let postBody = "grant_type=authorization_code&code=\(code)&redirect_uri=\(Credentials.redirectURI)"
-        request.httpBody = postBody.data(using: .utf8)
         
         return request
     }

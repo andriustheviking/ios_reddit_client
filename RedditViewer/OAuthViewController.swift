@@ -49,12 +49,12 @@ class OAuthViewController: UIViewController, WKNavigationDelegate, WKUIDelegate 
     
     var credentialDelegate : OAuthCredentialDelegate?
     
-    //MARK: - webview navigation delegate
+    //MARK: - Webview Navigation Delegate
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
         guard let url = navigationAction.request.url else { return }
         
-        //if oauth redirect, pass credentials to delegate and dismiss
+        //if redirect from oauth, pass credentials to delegate and dismiss
         if let host = url.host, "https://"+host == Credentials.redirectURI {
             
             //cancel redirection
