@@ -61,30 +61,27 @@ class ViewController: UIViewController, OAuthCredentialDelegate {
 extension ViewController {
     
     //request front page
-    
+    func getSubreddits(){
+        if let accessToken = token?.access_token {
+            
+        }
+        else {
+            
+        }
+    }
     
     
     //delegate retrieves OAuth Token with code
     func receivedCredentials(code: String? ){
-        
         if let code = code {
-            
             //store json response for token via closure
-            APICalls.getJSON(via: APISpecs.tokenRequest(code: code)) {
+            APICalls.getJSON(via: APICalls.tokenRequest(code: code)) {
                 [weak self] json in
                 
                 //TODO handle errors from reddit
                 
                 print (json)
                 self?.token = OAuthToken(json: json)
-                
-                //t creates reference loop
-                if let t = self?.token?.access_token {
-                    print("Token="+t)
-                }
-                else {
-                    print("Token=nil")
-                }
                 
                 //update UI with token
             }
