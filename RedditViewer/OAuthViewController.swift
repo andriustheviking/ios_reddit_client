@@ -71,15 +71,7 @@ class OAuthViewController: UIViewController, WKNavigationDelegate, WKUIDelegate 
     }
 }
 
-// MARK: URL Query Parameter Extension
-// extension from: https://stackoverflow.com/questions/41421686/get-the-value-of-url-parameters?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
-extension URL {
-    func valueOf(queryParameter: String) -> String? {
-        guard  let url = URLComponents.init(string: self.absoluteString ) else { return nil }
-        
-        return url.queryItems?.first(where: { $0.name == queryParameter})?.value
-    }
-}
+
 
 
 
