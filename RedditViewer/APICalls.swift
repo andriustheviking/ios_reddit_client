@@ -19,7 +19,7 @@ class APICalls {
     }
     
     
-    
+    //MARK: redditRequest()
     //makes a restful request to reddit's api.
     //host is automatically determined by token presence
     static func redditRequest(endpoint: String, token: String?, method:String="GET", body:String="") -> URLRequest {
@@ -51,6 +51,7 @@ class APICalls {
     }
 
     
+    //MARK: getJSON()
     //retrieves json [String:Any] via POST request and passes it via completion block
     static func getJSON(via request: URLRequest?, completionBlock: @escaping ([String : Any]) -> Void) {
         
