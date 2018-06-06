@@ -12,41 +12,34 @@ import CoreData
 class ViewController: UIViewController, OAuthCredentialDelegate, UITableViewDelegate, UITableViewDataSource {
     
     
+    //Models
+    var user = UserModel()
+    //MARK: TODO - refactor posts into data model
+    var posts = Array<[String: Any]>()
+    
+
+    
+    //MARK: Outlets
+    @IBOutlet weak var redditFeedTableView: UITableView!
+    
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("viewDidLoad fired")
+        
         redditFeedTableView.delegate = self
         redditFeedTableView.dataSource = self
-        
-        dbContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        
-        if let context = dbContext, let account = getFirstAccount(context: context, username: nil){
-            username = account.username
-            
-            token = OAuthToken(account: account)
-            
-        }
     }
-
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         print("viewWillLayoutSubviews fired")
     }
     
     
-    //MARK: Outlets
-    @IBOutlet weak var redditFeedTableView: UITableView!
-    
-    //Variables  
-    //MARK: TODO - refactor model out of VC
-    var dbContext: NSManagedObjectContext?
-    var username: String?
-    var posts = Array<[String: Any]>()
-    
-    var token: OAuthToken?
-    
 
-    //MARK tester button
+    //MARK: tester button
     @IBAction func something(_ sender: UIBarButtonItem) {
     
         getSubreddits()
@@ -72,9 +65,9 @@ class ViewController: UIViewController, OAuthCredentialDelegate, UITableViewDele
     //request front page
     func getSubreddits(){
         
-        APICalls.getJSON(via: APICalls.redditRequest(endpoint: "/best", token: token?.access_token )){
+        APICalls.getJSON(via: APICalls.redditRequest(endpoint: "/best", token: user.accessToken )){
             [weak self] json in
-            
+//            print(json)
             guard let listings = json["data"] as? [String:Any] else { return }
 
             //MARK: TEMP - clear out out array
@@ -86,44 +79,15 @@ class ViewController: UIViewController, OAuthCredentialDelegate, UITableViewDele
                     self?.posts.append(postData )
                 }
             }
-            
-            self?.redditFeedTableView.reloadData()
+            DispatchQueue.main.async {
+                self?.redditFeedTableView.reloadData()
+            }
             
             return
         } //end of closure
     }
 
     
-    
-    
-    //MARK - loadFirstCredential
-    // loads first credential in database
-    func loadFirstCredential(){
-        return
-    }
-    
-    //returns the first account in context, accepts username
-    func getFirstAccount(context: NSManagedObjectContext, username: String?=nil) -> Account? {
-        
-        let accountFetch = NSFetchRequest<NSManagedObject>(entityName: "Account")
-        
-        if let username = username {
-            accountFetch.predicate = NSPredicate(format: "username == %@", username)
-        }
-        
-        var results: [NSManagedObject] = []
-        
-        do {
-            results = try context.fetch(accountFetch)
-        } catch {
-            print("error fetching accounts from coredata")
-            return nil
-        }
-        
-        //set account to either the first or a new account if none
-        return results.first as? Account
-    }
-
     
     
 //MARK: - Table View functions
@@ -153,41 +117,6 @@ class ViewController: UIViewController, OAuthCredentialDelegate, UITableViewDele
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
-
-
-    
-    
-    //MARK - Save Credentials
-    //calls API to get username and updates existing or saves new
-    func saveCredentials(withToken token: OAuthToken){
-        
-        //get username from reddit
-        APICalls.getJSON(via: APICalls.redditRequest(endpoint: "/api/v1/me", token: token.access_token )){
-            [weak self] json in
-            
-            guard let name = json["name"] as? String else { return }
-            
-            let dbContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-            
-            //set account to either the first or a new account if none
-            let account = self?.getFirstAccount(context: dbContext, username: name) ?? Account(context: dbContext)
-            
-            //update account info
-            account.username = self?.username
-            account.refresh_token = token.refresh_token
-            account.expires = token.expires_in as NSDate?
-            account.token = token.access_token
-            
-            self?.username = name
-            
-            (UIApplication.shared.delegate as! AppDelegate).saveContext()
-            
-            print("account saved")
-            
-            return
-        }
-    }
-
     
     
     
@@ -213,14 +142,10 @@ class ViewController: UIViewController, OAuthCredentialDelegate, UITableViewDele
             
             //MARK: TODO - handle errors from reddit
             
-            print (json)
-            self?.token = OAuthToken(json: json)
-            
             //asyncronously update CoreData
             DispatchQueue.global(qos: .background).async {
                 [weak self] in
-                guard let tkn = self?.token else { return }
-                self?.saveCredentials(withToken: tkn)
+                self?.user.saveCredentials(json)
             }
         }
     }
