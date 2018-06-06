@@ -32,7 +32,19 @@ class OAuthToken {
         refresh_token = refresh
         self.scope = scope
         access_token = access
+    }
+    
+    init?(account: Account){
         
+        guard let token = account.token else { return nil }
+        guard let expires = account.expires else { return nil }
+        guard let refresh = account.refresh_token else { return nil }
+        token_type = "bearer"
+        
+        scope = Credentials.scope
+        expires_in = expires as Date
+        access_token = token
+        refresh_token = refresh
     }
 }
 

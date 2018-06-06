@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0939885720C0C0A900EBE8ED /* RedditPostTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939885520C0C0A900EBE8ED /* RedditPostTableCell.swift */; };
 		0939885820C0C0A900EBE8ED /* RedditPostTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0939885620C0C0A900EBE8ED /* RedditPostTableCell.xib */; };
+		093B3EA420C760910069582C /* userModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093B3EA320C760910069582C /* userModel.swift */; };
 		095DC76C20C605FB00CCADE7 /* UtilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095DC76B20C605FB00CCADE7 /* UtilityExtensions.swift */; };
 		097AFB2E20C4AD2900B96376 /* APICalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097AFB2D20C4AD2900B96376 /* APICalls.swift */; };
 		09A844B120B77EA4008371CC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A844B020B77EA4008371CC /* AppDelegate.swift */; };
@@ -26,6 +27,7 @@
 /* Begin PBXFileReference section */
 		0939885520C0C0A900EBE8ED /* RedditPostTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedditPostTableCell.swift; sourceTree = "<group>"; };
 		0939885620C0C0A900EBE8ED /* RedditPostTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RedditPostTableCell.xib; sourceTree = "<group>"; };
+		093B3EA320C760910069582C /* userModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = userModel.swift; sourceTree = "<group>"; };
 		095DC76B20C605FB00CCADE7 /* UtilityExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityExtensions.swift; sourceTree = "<group>"; };
 		097AFB2D20C4AD2900B96376 /* APICalls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APICalls.swift; sourceTree = "<group>"; };
 		09A844AD20B77EA4008371CC /* RedditViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedditViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +89,7 @@
 				09A844BC20B77EA4008371CC /* LaunchScreen.storyboard */,
 				09A844BF20B77EA4008371CC /* Info.plist */,
 				09A844B720B77EA4008371CC /* RedditViewer.xcdatamodeld */,
+				093B3EA320C760910069582C /* userModel.swift */,
 			);
 			path = RedditViewer;
 			sourceTree = "<group>";
@@ -172,6 +175,7 @@
 				09A844C620B77F65008371CC /* secret.swift in Sources */,
 				09A844B120B77EA4008371CC /* AppDelegate.swift in Sources */,
 				09A844B920B77EA4008371CC /* RedditViewer.xcdatamodeld in Sources */,
+				093B3EA420C760910069582C /* userModel.swift in Sources */,
 				097AFB2E20C4AD2900B96376 /* APICalls.swift in Sources */,
 				095DC76C20C605FB00CCADE7 /* UtilityExtensions.swift in Sources */,
 				09A844C820B780B2008371CC /* OAuthViewController.swift in Sources */,
