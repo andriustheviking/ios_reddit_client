@@ -8,15 +8,15 @@
 
 import Foundation
 
-class Comment{
+class RedditComment{
     
-    let replyBody: String
-    let commentReplies: Array<RedditComments>
+    var replyBody: String
+    var commentReplies: Array<RedditComment>
     
     init(listing: [String:Any]) {
         
         replyBody = ""
-        commentReplies = Array<RedditComments>()
+        commentReplies = Array<RedditComment>()
         
         guard let listingData = listing["data"] as? [String:Any] else {return}
         guard let children = listingData["children"] as? Array<[String:Any]> else { return }
@@ -27,14 +27,16 @@ class Comment{
             if let commentData = thing["data"] as? [String:Any] {
                 
                 self.replyBody = commentData["body"] as? String ?? ""
+                print(self.replyBody)
                 
-                guard let replies = commentData["replies"] as? [String:Any] else { continue }
-                guard let repliesData = replies["data"] as? [String:Any] else { continue }
-                guard let repliesChildren = repliesData["children"] as? Array<[String:Any]> else {continue}
-                
-                for reply in repliesChildren {
-                    commentReplies.append(reply)
+                if let replies = commentData["replies"] as? [String:Any],
+                   let repliesData = replies["data"] as? [String:Any],
+                   let childReplies = repliesData["children"] as? Array<[String:Any]>  {
+                    for reply in childReplies {
+                        commentReplies.append(RedditComment(listing: reply))
+                    }
                 }
+                //TODO: handle child links: e0adqgo
             }
         }
     }
