@@ -77,7 +77,9 @@ class UserModel {
         
         //get username from reddit
         APICalls.getJSON(via: APICalls.redditRequest(endpoint: "/api/v1/me", token: token.access_token )){
-            [weak self] json in
+            [weak self] jsonObject in
+            
+            guard let json = jsonObject as? [String:Any] else {return}
             
             guard let name = json["name"] as? String else {
                 print("UserModel: could not get name from json")

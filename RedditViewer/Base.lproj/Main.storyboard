@@ -48,11 +48,30 @@
                     </navigationItem>
                     <connections>
                         <outlet property="redditFeedTableView" destination="3fj-ZE-pM3" id="xRX-1C-agh"/>
+                        <segue destination="KTz-jX-qm7" kind="show" identifier="openComments" id="tCA-pN-WTE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1055.2" y="123.68815592203899"/>
+        </scene>
+        <!--Comments Table View Controller-->
+        <scene sceneID="XOn-bf-p1j">
+            <objects>
+                <tableViewController id="KTz-jX-qm7" customClass="CommentsTableViewController" customModule="RedditViewer" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="s7d-Pe-RzE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="KTz-jX-qm7" id="sN7-SM-Am1"/>
+                            <outlet property="delegate" destination="KTz-jX-qm7" id="bcA-Nx-oey"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mEO-Rs-2Sg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1945" y="124"/>
         </scene>
         <!--Auth View Controller-->
         <scene sceneID="sXM-a2-HMG">
@@ -70,7 +89,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kni-pD-x2H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1840.8" y="123.68815592203899"/>
+            <point key="canvasLocation" x="1946" y="-567"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="EkN-Ah-cy7">

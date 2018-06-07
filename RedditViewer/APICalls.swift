@@ -19,6 +19,9 @@ class APICalls {
     }
     
     
+
+    
+    
     //MARK: redditRequest()
     //makes a restful request to reddit's api.
     //host is automatically determined by token presence
@@ -53,10 +56,10 @@ class APICalls {
     
     //MARK: getJSON()
     //retrieves json [String:Any] via POST request and passes it via completion block
-    static func getJSON(via request: URLRequest?, completionBlock: @escaping ([String : Any]) -> Void) {
+    static func getJSON(via request: URLRequest?, completionBlock: @escaping (Any) -> Void) {
         
         if let request = request {
-        
+            
             let session = URLSession.shared
             
             let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error  in
@@ -65,16 +68,11 @@ class APICalls {
                 
                 guard let data = data else { return }
                 
+                
                 do {
-                    let jsonSerialized = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Any]
+                    let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
                     
-                    if let json = jsonSerialized {
-                        print("calling completion block:")
-                        completionBlock(json)
-                    }
-                    else {
-                        print ("could not unwrap json")
-                    }
+                        completionBlock(jsonObject)
                     
                 } catch let error {
                     //is error blocking code?

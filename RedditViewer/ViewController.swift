@@ -53,7 +53,20 @@ class ViewController: UIViewController, OAuthCredentialDelegate, UITableViewDele
             case "getAuthorization":
                 let vc : OAuthViewController = segue.destination as! OAuthViewController
                 vc.credentialDelegate = self
+            
+            case "openComments":
+                //grab selected cell number
+                guard let postNum = redditFeedTableView.indexPathForSelectedRow?.row else { return }
                 
+                let post = posts[postNum]
+
+                guard let permalink = post["permalink"] as? String else { return }
+                
+                let vc : CommentsTableViewController = segue.destination as! CommentsTableViewController
+                
+                vc.destination = permalink
+                vc.user = user
+            
             default:
                 break;
         }
@@ -66,12 +79,14 @@ class ViewController: UIViewController, OAuthCredentialDelegate, UITableViewDele
     func getSubreddits(){
         
         APICalls.getJSON(via: APICalls.redditRequest(endpoint: "/best", token: user.accessToken )){
-            [weak self] json in
+            [weak self] jsonObject in
 //            print(json)
-            guard let listings = json["data"] as? [String:Any] else { return }
-
+            guard let json = jsonObject as? [String:Any] else { return }
+            
             //MARK: TEMP - clear out out array
             self?.posts.removeAll(keepingCapacity: true)
+            
+            guard let listings = json["data"] as? [String:Any] else { return }
             
             for post in (listings["children"] as? Array<[String:Any]>)! {
                 if let postData = (post["data"] as? [String : Any]) {
@@ -109,6 +124,9 @@ class ViewController: UIViewController, OAuthCredentialDelegate, UITableViewDele
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "openComments", sender: self)
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         //fix this
@@ -138,14 +156,17 @@ class ViewController: UIViewController, OAuthCredentialDelegate, UITableViewDele
         tokenRequest.setValue("Basic \(base64UserPass)", forHTTPHeaderField: "Authorization")
         
         APICalls.getJSON(via: tokenRequest) {
-            [weak self] json in
+            [weak self] jsonObject in
             
             //MARK: TODO - handle errors from reddit
             
             //asyncronously update CoreData
-            DispatchQueue.global(qos: .background).async {
-                [weak self] in
-                self?.user.saveCredentials(json)
+            if let json = jsonObject as? [String:Any]{
+                DispatchQueue.global(qos: .background).async {
+                    [weak self] in
+                    self?.user.saveCredentials(json)
+                }
+                self?.getSubreddits()
             }
         }
     }
