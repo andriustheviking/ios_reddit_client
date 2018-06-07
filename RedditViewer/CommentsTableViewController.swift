@@ -33,30 +33,31 @@ class CommentsTableViewController: UITableViewController {
                     
                     if let content = post[0] as? [String:Any] {
                         //this is the post content
-//                        print(content)
+                        _ = content
                     }
                     
-                    if let replyNode = post[1] as? [String:Any],
-                       let replyNodeData = replyNode["data"] as? [String:Any],
-                       let replies = replyNodeData["children"] as? Array<[String:Any]>{
-                        for reply in replies {
-                            self?.comments.append( RedditComment(listing: reply) )
+                    //store post comments as array of comment trees
+                    if let commentsListing = post[1] as? [String:Any],
+                    let commentsData = commentsListing["data"] as? [String:Any],
+                    let listingChildren = commentsData["children"] as? Array<[String:Any]> {
+                            print (listingChildren)
+
+                        for listing in listingChildren {
+                            self?.comments.append(RedditComment(listing: listing))
                         }
+
+                        if let comments = self?.comments {
+                            print (comments.count)
+                            for listing in comments {
+                                print( listing.replyBody )
+                            }
+                        }
+                    
                     }
                 }
                 else {
                     print("CommentsTable: could not unwrap posts")
                 }
-                
-                if let comments = self?.comments {
-                    print (comments.count)
-//                    for listing in comments {
-//                        print( listing.replyBody )
-//                    }
-                }
-//                else {
-//                    print("no comments")
-//                }
             }
         }
     }

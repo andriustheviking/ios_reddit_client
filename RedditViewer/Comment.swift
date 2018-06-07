@@ -19,25 +19,18 @@ class RedditComment{
         commentReplies = Array<RedditComment>()
         
         guard let listingData = listing["data"] as? [String:Any] else {return}
-        guard let children = listingData["children"] as? Array<[String:Any]> else { return }
         
-        //thing is not my term
-        for thing in children {
-            
-            if let commentData = thing["data"] as? [String:Any] {
-                
-                self.replyBody = commentData["body"] as? String ?? ""
-                print(self.replyBody)
-                
-                if let replies = commentData["replies"] as? [String:Any],
-                   let repliesData = replies["data"] as? [String:Any],
-                   let childReplies = repliesData["children"] as? Array<[String:Any]>  {
-                    for reply in childReplies {
-                        commentReplies.append(RedditComment(listing: reply))
-                    }
-                }
-                //TODO: handle child links: e0adqgo
+        self.replyBody = listingData["body"] as? String ?? ""
+
+
+        if let repliesListing = listingData["replies"] as? [String:Any],
+        let repliesData = repliesListing["data"] as? [String:Any],
+        let repliesChildren = repliesData["children"] as? Array<[String:Any]>{
+            for reply in repliesChildren {
+                commentReplies.append(RedditComment(listing: reply))
             }
         }
+        //TODO: handle child links: e0adqgo
+
     }
 }
