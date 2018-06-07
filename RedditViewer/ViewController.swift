@@ -62,8 +62,8 @@ class ViewController: UIViewController, OAuthCredentialDelegate, UITableViewDele
 
                 guard let permalink = post["permalink"] as? String else { return }
                 
+                //pass user info and destination to segue
                 let vc : CommentsTableViewController = segue.destination as! CommentsTableViewController
-                
                 vc.destination = permalink
                 vc.user = user
             

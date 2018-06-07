@@ -1,5 +1,5 @@
 //
-//  PostTableViewCell.swift
+//  CommentTableViewCell.swift
 //  RedditViewer
 //
 //  Created by Andrius Kelly on 6/5/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PostTableViewCell: UITableViewCell {
+class CommentTableViewCell: UITableViewCell {
 
     @IBOutlet weak var userName: UILabel!
     
