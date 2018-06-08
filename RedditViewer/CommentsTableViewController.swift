@@ -42,7 +42,7 @@ class CommentsTableViewController: UITableViewController {
                     let contentData = listingChildren["data"] as? [String:Any] {
                         
                         //this is the post content
-                        print(contentData)
+//                        print(contentData)
                         self?.subreddit = contentData["subreddit"] as? String
                     }
                     
@@ -52,7 +52,7 @@ class CommentsTableViewController: UITableViewController {
                     let commentsData = commentsListing["data"] as? [String:Any],
                     let listingChildren = commentsData["children"] as? Array<[String:Any]> {
 
-                        print(listingChildren.first)
+//                        print(listingChildren.first)
                         
                         for listing in listingChildren {
                             self?.comments.append(RedditComment(listing: listing))

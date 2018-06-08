@@ -23,6 +23,7 @@
 		09A844BE20B77EA4008371CC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09A844BC20B77EA4008371CC /* LaunchScreen.storyboard */; };
 		09A844C620B77F65008371CC /* secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A844C520B77F65008371CC /* secret.swift */; };
 		09A844C820B780B2008371CC /* OAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A844C720B780B2008371CC /* OAuthViewController.swift */; };
+		09B64B0B20CB285C00D80459 /* SubredditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B64B0A20CB285C00D80459 /* SubredditViewController.swift */; };
 		09CA59A920C22CB30053D006 /* AuthorizationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CA59A820C22CB30053D006 /* AuthorizationToken.swift */; };
 		09D0C31220C231F3002AAA09 /* APICredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0C31120C231F3002AAA09 /* APICredentials.swift */; };
 		09D9000620C8B23C00320D13 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D9000520C8B23C00320D13 /* Comment.swift */; };
@@ -48,6 +49,7 @@
 		09A844BF20B77EA4008371CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		09A844C520B77F65008371CC /* secret.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = secret.swift; sourceTree = "<group>"; };
 		09A844C720B780B2008371CC /* OAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthViewController.swift; sourceTree = "<group>"; };
+		09B64B0A20CB285C00D80459 /* SubredditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubredditViewController.swift; sourceTree = "<group>"; };
 		09CA59A820C22CB30053D006 /* AuthorizationToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationToken.swift; sourceTree = "<group>"; };
 		09D0C31120C231F3002AAA09 /* APICredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APICredentials.swift; sourceTree = "<group>"; };
 		09D9000520C8B23C00320D13 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				093B3EA520C774C90069582C /* CommentTableViewCell.swift */,
 				09A844C720B780B2008371CC /* OAuthViewController.swift */,
 				09A844B220B77EA4008371CC /* ViewController.swift */,
+				09B64B0A20CB285C00D80459 /* SubredditViewController.swift */,
 				09102E6A20CA036000221FD6 /* NewCommentViewController.swift */,
 				0939885520C0C0A900EBE8ED /* RedditPostTableCell.swift */,
 				09A844C520B77F65008371CC /* secret.swift */,
@@ -197,6 +200,7 @@
 				097AFB2E20C4AD2900B96376 /* APICalls.swift in Sources */,
 				095DC76C20C605FB00CCADE7 /* UtilityExtensions.swift in Sources */,
 				09A844C820B780B2008371CC /* OAuthViewController.swift in Sources */,
+				09B64B0B20CB285C00D80459 /* SubredditViewController.swift in Sources */,
 				093B3EA720C774C90069582C /* CommentTableViewCell.swift in Sources */,
 				09102E6B20CA036000221FD6 /* NewCommentViewController.swift in Sources */,
 			);

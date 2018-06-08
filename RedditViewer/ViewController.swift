@@ -52,27 +52,32 @@ class ViewController: UIViewController, OAuthCredentialDelegate, UITableViewDele
     
     //MARK: - Segue Handler
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         guard let id = segue.identifier else {return}
+        
         switch id {
-            case "getAuthorization":
-                let vc : OAuthViewController = segue.destination as! OAuthViewController
-                vc.credentialDelegate = self
-            
-            case "openComments":
-                //grab selected cell number
-                guard let postNum = redditFeedTableView.indexPathForSelectedRow?.row else { return }
-                
-                let post = posts[postNum]
 
-                guard let permalink = post["permalink"] as? String else { return }
-                
-                //pass user info and destination to segue
-                let vc : CommentsTableViewController = segue.destination as! CommentsTableViewController
-                vc.destination = permalink
-                vc.user = user
+        case "getAuthorization":
+            let vc = segue.destination as! OAuthViewController
+            vc.credentialDelegate = self
+        
+
+        case "openSubreddit":
+            let vc = segue.destination as! SubredditViewController
+            vc.user = user
             
-            default:
-                break;
+            
+            guard let postNum = redditFeedTableView.indexPathForSelectedRow?.row else { return }
+             let post = posts[ postNum ]
+        
+            guard let url = post["url"] as? String else {return}
+            guard let display_name = post["display_name"] as? String else {return}
+        
+            vc.subreddit = display_name
+            vc.subredditUrl = url
+        
+        default:
+            break
         }
     }
 
@@ -82,7 +87,7 @@ class ViewController: UIViewController, OAuthCredentialDelegate, UITableViewDele
     //request front page
     func getSubreddits(){
         
-        APICalls.getJSON(via: APICalls.redditRequest(endpoint: "/best", token: user.accessToken )){
+        APICalls.getJSON(via: APICalls.redditRequest(endpoint: "/subreddits/mine/subscriber", token: user.accessToken )){
             [weak self] jsonObject in
 //            print(json)
             guard let json = jsonObject as? [String:Any] else { return }
@@ -91,6 +96,8 @@ class ViewController: UIViewController, OAuthCredentialDelegate, UITableViewDele
             self?.posts.removeAll(keepingCapacity: true)
             
             guard let listings = json["data"] as? [String:Any] else { return }
+            
+//            print(listings)
             
             for post in (listings["children"] as? Array<[String:Any]>)! {
                 if let postData = (post["data"] as? [String : Any]) {
@@ -119,21 +126,20 @@ class ViewController: UIViewController, OAuthCredentialDelegate, UITableViewDele
         
         let post = posts[indexPath.row]
         
-        let title = post["title"] as? String ?? "Title Error"
-        let subreddit = post["subreddit"] as? String ?? "Subreddit Error"
+        let name = post["display_name"] as? String ?? "Title Error"
+        let subreddit = post["subreddit"] as? String ?? ""
         
-        cell.postTitle.text = title
+        cell.postTitle.text = name
         cell.subreddit.text = subreddit
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "openComments", sender: self)
+        performSegue(withIdentifier: "openSubreddit", sender: self)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        //fix this
         return UITableViewAutomaticDimension
     }
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {

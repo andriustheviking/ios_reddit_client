@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Subreddits-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="RedditViewer" customModuleProvider="target" sceneMemberID="viewController">
@@ -35,7 +35,7 @@
                             <constraint firstAttribute="trailing" secondItem="3fj-ZE-pM3" secondAttribute="trailing" id="ldH-j3-yVb"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Nre-bL-YLF">
+                    <navigationItem key="navigationItem" title="Subreddits" id="Nre-bL-YLF">
                         <barButtonItem key="leftBarButtonItem" title="Print" id="82X-rg-7tm">
                             <connections>
                                 <action selector="something:" destination="BYZ-38-t0r" id="5bY-Zk-tiO"/>
@@ -49,14 +49,14 @@
                     </navigationItem>
                     <connections>
                         <outlet property="redditFeedTableView" destination="3fj-ZE-pM3" id="xRX-1C-agh"/>
-                        <segue destination="KTz-jX-qm7" kind="show" identifier="openComments" id="tCA-pN-WTE"/>
+                        <segue destination="YKi-wv-h0u" kind="show" identifier="openSubreddit" id="wR4-nP-Fly"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1055.2" y="123.68815592203899"/>
+            <point key="canvasLocation" x="362" y="124"/>
         </scene>
-        <!--Title-->
+        <!--Comments-->
         <scene sceneID="XOn-bf-p1j">
             <objects>
                 <tableViewController id="KTz-jX-qm7" customClass="CommentsTableViewController" customModule="RedditViewer" customModuleProvider="target" sceneMemberID="viewController">
@@ -69,7 +69,7 @@
                             <outlet property="delegate" destination="KTz-jX-qm7" id="bcA-Nx-oey"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Title" id="BD7-i8-mze">
+                    <navigationItem key="navigationItem" title="Comments" id="BD7-i8-mze">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="wgu-9G-sZq">
                             <connections>
                                 <segue destination="MqG-oQ-tDW" kind="show" identifier="newComment" id="vhy-7V-ocZ"/>
@@ -97,13 +97,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="u5r-wl-ag9">
-                                <rect key="frame" x="16" y="99.5" width="343" height="253.5"/>
+                                <rect key="frame" x="16" y="100" width="343" height="253"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghx-ea-mtI">
-                                <rect key="frame" x="16" y="72" width="343" height="19.5"/>
+                                <rect key="frame" x="16" y="72" width="343" height="20"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -146,7 +146,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kni-pD-x2H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1946" y="-567"/>
+            <point key="canvasLocation" x="1166" y="-537"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="EkN-Ah-cy7">
@@ -164,7 +164,49 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PEh-RX-sHw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="116" y="123.68815592203899"/>
+            <point key="canvasLocation" x="-468" y="124"/>
+        </scene>
+        <!--SubredditTitle-->
+        <scene sceneID="qeh-CE-Jns">
+            <objects>
+                <viewController id="YKi-wv-h0u" customClass="SubredditViewController" customModule="RedditViewer" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Mit-D8-3BG"/>
+                        <viewControllerLayoutGuide type="bottom" id="O2W-mb-29K"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1Az-KZ-Ag7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bSG-AE-eQU">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="bSG-AE-eQU" firstAttribute="leading" secondItem="1Az-KZ-Ag7" secondAttribute="leading" id="219-1o-1uo"/>
+                            <constraint firstItem="bSG-AE-eQU" firstAttribute="top" secondItem="1Az-KZ-Ag7" secondAttribute="top" id="Ewn-3F-Yzo"/>
+                            <constraint firstAttribute="trailing" secondItem="bSG-AE-eQU" secondAttribute="trailing" id="pvt-dU-SFG"/>
+                            <constraint firstItem="O2W-mb-29K" firstAttribute="top" secondItem="bSG-AE-eQU" secondAttribute="bottom" id="qUQ-bM-LEA"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="SubredditTitle" id="6FO-hV-QvP">
+                        <barButtonItem key="rightBarButtonItem" title="Print" id="ih9-tQ-dFG">
+                            <connections>
+                                <action selector="something:" destination="YKi-wv-h0u" id="DwM-Xd-E5A"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="navBarTitle" destination="6FO-hV-QvP" id="i2d-Dh-Orq"/>
+                        <outlet property="postsTableView" destination="bSG-AE-eQU" id="agp-kP-oJZ"/>
+                        <segue destination="KTz-jX-qm7" kind="show" identifier="openComments" id="gAd-TU-tE6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HxF-Td-N8Q" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1166" y="124"/>
         </scene>
     </scenes>
 </document>
