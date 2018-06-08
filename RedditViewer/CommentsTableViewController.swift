@@ -112,7 +112,7 @@ class CommentsTableViewController: UITableViewController {
 
         // Configure the cell...
         cell.commentText.text = comments[indexPath.row].replyBody
-        cell.userName.text = "Anonymous"
+        cell.userName.text = comments[indexPath.row].author
         
         return cell
     }
