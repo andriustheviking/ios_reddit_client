@@ -12,16 +12,21 @@ class CommentsTableViewController: UITableViewController {
 
 
     var destination: String?
+    var subreddit: String?
     weak var user: UserModel?
     
     var comments = Array<RedditComment>()
     
+    @IBOutlet weak var barTitle: UINavigationItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //connect tablview to custom table cell
         let nib = UINib.init(nibName: "CommentTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "CommentCell")
 
+        //get destination json request
         if let destination = destination {
             let commentsRequest = APICalls.redditRequest(endpoint: destination, token: user?.accessToken)
 
@@ -30,16 +35,25 @@ class CommentsTableViewController: UITableViewController {
                 
                 if let post = jsonObject as? Array<Any>{
                     
-                    if let content = post[0] as? [String:Any] {
+                    //get content info
+                    if let contentListing = post[0] as? [String:Any],
+                        let listingData = contentListing["data"] as? [String:Any],
+                    let listingChildren = (listingData["children"] as? Array<[String:Any]>)?.first,
+                    let contentData = listingChildren["data"] as? [String:Any] {
+                        
                         //this is the post content
-                        _ = content
+                        print(contentData)
+                        self?.subreddit = contentData["subreddit"] as? String
                     }
+                    
                     
                     //store post comments as array of comment trees
                     if let commentsListing = post[1] as? [String:Any],
                     let commentsData = commentsListing["data"] as? [String:Any],
                     let listingChildren = commentsData["children"] as? Array<[String:Any]> {
 
+                        print(listingChildren.first)
+                        
                         for listing in listingChildren {
                             self?.comments.append(RedditComment(listing: listing))
                         }
@@ -57,8 +71,30 @@ class CommentsTableViewController: UITableViewController {
         }
     }
 
+    
+    override func viewWillLayoutSubviews() {
+        //set the navbar title to the subreddit title
+        barTitle.title = subreddit
+    }
+    
+    
+    
+    //MARK: Segue Handler
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let id = segue.identifier else { return }
+        switch id {
+        case "newComment":
+            let vc = segue.destination as! NewCommentViewController
+            vc.postTitleContainer = "" //TODO: pass selected comment permalink
+            vc.parentName = "" //TODO: pass selected comment name
+        default:
+            break
+        }
+    }
+    
+    
+    
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1

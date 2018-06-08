@@ -46,12 +46,14 @@ class UserModel {
         
         let accountFetch = NSFetchRequest<NSManagedObject>(entityName: "Account")
         
+        //filter by username if we have it
         if let username = username {
             accountFetch.predicate = NSPredicate(format: "username == %@", username)
         }
         
         var results: [NSManagedObject] = []
         
+        //query coredata database
         do {
             results = try context.fetch(accountFetch)
         } catch {

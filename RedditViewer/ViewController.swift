@@ -30,6 +30,10 @@ class ViewController: UIViewController, OAuthCredentialDelegate, UITableViewDele
         
         redditFeedTableView.delegate = self
         redditFeedTableView.dataSource = self
+        
+        if let _ = user.username {
+            getSubreddits()
+        }
     }
     
     override func viewWillLayoutSubviews() {
@@ -165,8 +169,8 @@ class ViewController: UIViewController, OAuthCredentialDelegate, UITableViewDele
                 DispatchQueue.global(qos: .background).async {
                     [weak self] in
                     self?.user.saveCredentials(json)
+                    self?.getSubreddits()
                 }
-                self?.getSubreddits()
             }
         }
     }

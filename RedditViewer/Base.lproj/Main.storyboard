@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -55,7 +56,7 @@
             </objects>
             <point key="canvasLocation" x="1055.2" y="123.68815592203899"/>
         </scene>
-        <!--Comments Table View Controller-->
+        <!--Title-->
         <scene sceneID="XOn-bf-p1j">
             <objects>
                 <tableViewController id="KTz-jX-qm7" customClass="CommentsTableViewController" customModule="RedditViewer" customModuleProvider="target" sceneMemberID="viewController">
@@ -68,10 +69,66 @@
                             <outlet property="delegate" destination="KTz-jX-qm7" id="bcA-Nx-oey"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Title" id="BD7-i8-mze">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="wgu-9G-sZq">
+                            <connections>
+                                <segue destination="MqG-oQ-tDW" kind="show" identifier="newComment" id="vhy-7V-ocZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="barTitle" destination="BD7-i8-mze" id="prL-P2-oDR"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mEO-Rs-2Sg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1945" y="124"/>
+        </scene>
+        <!--New Comment-->
+        <scene sceneID="vIH-W5-KGE">
+            <objects>
+                <viewController id="MqG-oQ-tDW" customClass="NewCommentViewController" customModule="RedditViewer" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="QIH-cq-0a1"/>
+                        <viewControllerLayoutGuide type="bottom" id="PQ8-y4-uQr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="RmS-FH-mc4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="u5r-wl-ag9">
+                                <rect key="frame" x="16" y="99.5" width="343" height="253.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghx-ea-mtI">
+                                <rect key="frame" x="16" y="72" width="343" height="19.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.85573184490203857" green="0.85570621490478516" blue="0.85572075843811035" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="u5r-wl-ag9" firstAttribute="leading" secondItem="RmS-FH-mc4" secondAttribute="leadingMargin" id="0G0-JP-Exj"/>
+                            <constraint firstItem="u5r-wl-ag9" firstAttribute="top" secondItem="ghx-ea-mtI" secondAttribute="bottom" constant="8" id="1Xh-SN-h7B"/>
+                            <constraint firstItem="ghx-ea-mtI" firstAttribute="trailing" secondItem="RmS-FH-mc4" secondAttribute="trailingMargin" id="frw-Fd-lCj"/>
+                            <constraint firstItem="ghx-ea-mtI" firstAttribute="top" secondItem="QIH-cq-0a1" secondAttribute="bottom" constant="8" id="p8G-5M-SLf"/>
+                            <constraint firstItem="PQ8-y4-uQr" firstAttribute="top" secondItem="u5r-wl-ag9" secondAttribute="bottom" constant="314" id="rJ0-sR-You"/>
+                            <constraint firstItem="ghx-ea-mtI" firstAttribute="leading" secondItem="RmS-FH-mc4" secondAttribute="leadingMargin" id="wxZ-Pm-EgV"/>
+                            <constraint firstItem="u5r-wl-ag9" firstAttribute="trailing" secondItem="RmS-FH-mc4" secondAttribute="trailingMargin" id="xTO-oA-SHa"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="New Comment" id="tQ5-7z-vku"/>
+                    <connections>
+                        <outlet property="postTitle" destination="ghx-ea-mtI" id="sxf-2A-Fe9"/>
+                        <outlet property="textField" destination="u5r-wl-ag9" id="Zcf-pm-x8h"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hp5-CA-zNh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2789.5999999999999" y="123.68815592203899"/>
         </scene>
         <!--Auth View Controller-->
         <scene sceneID="sXM-a2-HMG">

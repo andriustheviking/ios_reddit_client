@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09102E6B20CA036000221FD6 /* NewCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09102E6A20CA036000221FD6 /* NewCommentViewController.swift */; };
 		0939885720C0C0A900EBE8ED /* RedditPostTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939885520C0C0A900EBE8ED /* RedditPostTableCell.swift */; };
 		0939885820C0C0A900EBE8ED /* RedditPostTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0939885620C0C0A900EBE8ED /* RedditPostTableCell.xib */; };
 		093B3EA420C760910069582C /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093B3EA320C760910069582C /* UserModel.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		09102E6A20CA036000221FD6 /* NewCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCommentViewController.swift; sourceTree = "<group>"; };
 		0939885520C0C0A900EBE8ED /* RedditPostTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedditPostTableCell.swift; sourceTree = "<group>"; };
 		0939885620C0C0A900EBE8ED /* RedditPostTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RedditPostTableCell.xib; sourceTree = "<group>"; };
 		093B3EA320C760910069582C /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				093B3EA520C774C90069582C /* CommentTableViewCell.swift */,
 				09A844C720B780B2008371CC /* OAuthViewController.swift */,
 				09A844B220B77EA4008371CC /* ViewController.swift */,
+				09102E6A20CA036000221FD6 /* NewCommentViewController.swift */,
 				0939885520C0C0A900EBE8ED /* RedditPostTableCell.swift */,
 				09A844C520B77F65008371CC /* secret.swift */,
 				093B3EA320C760910069582C /* UserModel.swift */,
@@ -195,6 +198,7 @@
 				095DC76C20C605FB00CCADE7 /* UtilityExtensions.swift in Sources */,
 				09A844C820B780B2008371CC /* OAuthViewController.swift in Sources */,
 				093B3EA720C774C90069582C /* CommentTableViewCell.swift in Sources */,
+				09102E6B20CA036000221FD6 /* NewCommentViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
