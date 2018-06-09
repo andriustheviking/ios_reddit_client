@@ -12,8 +12,8 @@ import CoreData
 class ViewController: UIViewController, OAuthCredentialDelegate, UITableViewDelegate, UITableViewDataSource {
     
     
-    //Models
-    var user = UserModel()
+    
+    var user = UserModel()  //gets user info at init
     //MARK: TODO - refactor posts into data model
     var posts = Array<[String: Any]>()
     

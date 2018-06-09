@@ -71,7 +71,7 @@ class APICalls {
                 
                 do {
                     let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
-                    
+
                         completionBlock(jsonObject)
                     
                 } catch let error {

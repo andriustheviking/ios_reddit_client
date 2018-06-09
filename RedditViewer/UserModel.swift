@@ -36,7 +36,6 @@ class UserModel {
             username = account.username
             
             token = OAuthToken(account: account)
-            
         }
     }
     
