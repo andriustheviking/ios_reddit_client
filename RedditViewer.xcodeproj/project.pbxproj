@@ -27,8 +27,10 @@
 		09B64B0B20CB285C00D80459 /* SubredditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B64B0A20CB285C00D80459 /* SubredditViewController.swift */; };
 		09CA59A920C22CB30053D006 /* AuthorizationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CA59A820C22CB30053D006 /* AuthorizationToken.swift */; };
 		09D0C31220C231F3002AAA09 /* APICredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0C31120C231F3002AAA09 /* APICredentials.swift */; };
+		09D4107820CC8C3A006830EA /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D4107720CC8C3A006830EA /* PostViewController.swift */; };
 		09D9000620C8B23C00320D13 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D9000520C8B23C00320D13 /* Comment.swift */; };
 		09DE27C120C886BC00A56775 /* CommentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DE27C020C886BC00A56775 /* CommentsTableViewController.swift */; };
+		09F8A2D420CC6B030083EBAB /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F8A2D320CC6B030083EBAB /* TabBarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,8 +56,10 @@
 		09B64B0A20CB285C00D80459 /* SubredditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubredditViewController.swift; sourceTree = "<group>"; };
 		09CA59A820C22CB30053D006 /* AuthorizationToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationToken.swift; sourceTree = "<group>"; };
 		09D0C31120C231F3002AAA09 /* APICredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APICredentials.swift; sourceTree = "<group>"; };
+		09D4107720CC8C3A006830EA /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		09D9000520C8B23C00320D13 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		09DE27C020C886BC00A56775 /* CommentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsTableViewController.swift; sourceTree = "<group>"; };
+		09F8A2D320CC6B030083EBAB /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,11 +78,10 @@
 			children = (
 				09D9000520C8B23C00320D13 /* Comment.swift */,
 				09DE27C020C886BC00A56775 /* CommentsTableViewController.swift */,
-				093B3EA520C774C90069582C /* CommentTableViewCell.swift */,
 				09A844B220B77EA4008371CC /* ViewController.swift */,
 				09B64B0A20CB285C00D80459 /* SubredditViewController.swift */,
 				09102E6A20CA036000221FD6 /* NewCommentViewController.swift */,
-				0939885520C0C0A900EBE8ED /* RedditPostTableCell.swift */,
+				09D4107920CC8C5B006830EA /* TableCells */,
 			);
 			name = RedditBrowsing;
 			sourceTree = "<group>";
@@ -87,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				09588FCB20CB49C100B56813 /* MyPostsTableViewController.swift */,
+				09D4107720CC8C3A006830EA /* PostViewController.swift */,
 			);
 			name = MyInfo;
 			sourceTree = "<group>";
@@ -112,6 +116,7 @@
 			children = (
 				09A844B020B77EA4008371CC /* AppDelegate.swift */,
 				097AFB2D20C4AD2900B96376 /* APICalls.swift */,
+				09F8A2D320CC6B030083EBAB /* TabBarViewController.swift */,
 				09D0C31120C231F3002AAA09 /* APICredentials.swift */,
 				09CA59A820C22CB30053D006 /* AuthorizationToken.swift */,
 				09A844C720B780B2008371CC /* OAuthViewController.swift */,
@@ -122,13 +127,22 @@
 				09588FCA20CB497D00B56813 /* RedditBrowsing */,
 				09A844BA20B77EA4008371CC /* Assets.xcassets */,
 				09A844B420B77EA4008371CC /* Main.storyboard */,
-				093B3EA620C774C90069582C /* CommentTableViewCell.xib */,
-				0939885620C0C0A900EBE8ED /* RedditPostTableCell.xib */,
 				09A844BC20B77EA4008371CC /* LaunchScreen.storyboard */,
 				09A844BF20B77EA4008371CC /* Info.plist */,
 				09A844B720B77EA4008371CC /* RedditViewer.xcdatamodeld */,
 			);
 			path = RedditViewer;
+			sourceTree = "<group>";
+		};
+		09D4107920CC8C5B006830EA /* TableCells */ = {
+			isa = PBXGroup;
+			children = (
+				093B3EA520C774C90069582C /* CommentTableViewCell.swift */,
+				093B3EA620C774C90069582C /* CommentTableViewCell.xib */,
+				0939885520C0C0A900EBE8ED /* RedditPostTableCell.swift */,
+				0939885620C0C0A900EBE8ED /* RedditPostTableCell.xib */,
+			);
+			name = TableCells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,6 +224,7 @@
 				09D0C31220C231F3002AAA09 /* APICredentials.swift in Sources */,
 				09DE27C120C886BC00A56775 /* CommentsTableViewController.swift in Sources */,
 				09D9000620C8B23C00320D13 /* Comment.swift in Sources */,
+				09F8A2D420CC6B030083EBAB /* TabBarViewController.swift in Sources */,
 				09CA59A920C22CB30053D006 /* AuthorizationToken.swift in Sources */,
 				09A844B320B77EA4008371CC /* ViewController.swift in Sources */,
 				09A844C620B77F65008371CC /* secret.swift in Sources */,
@@ -217,6 +232,7 @@
 				09A844B920B77EA4008371CC /* RedditViewer.xcdatamodeld in Sources */,
 				093B3EA420C760910069582C /* UserModel.swift in Sources */,
 				097AFB2E20C4AD2900B96376 /* APICalls.swift in Sources */,
+				09D4107820CC8C3A006830EA /* PostViewController.swift in Sources */,
 				095DC76C20C605FB00CCADE7 /* UtilityExtensions.swift in Sources */,
 				09A844C820B780B2008371CC /* OAuthViewController.swift in Sources */,
 				09B64B0B20CB285C00D80459 /* SubredditViewController.swift in Sources */,

@@ -32,7 +32,7 @@ class CommentsTableViewController: UITableViewController {
 
             APICalls.getJSON(via: commentsRequest){
                 [weak self] jsonObject in
-                
+                print(jsonObject)
                 if let post = jsonObject as? Array<Any>{
                     
                     //get content info

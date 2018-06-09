@@ -20,6 +20,12 @@ class MyPostsTableViewController: UITableViewController {
         tableView.delegate = self
         tableView.dataSource = self
 
+        
+        //connect tablview to custom table cell
+        let nib = UINib.init(nibName: "RedditPostTableCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "MyPostCell")
+        
+        //get submitted posts
         if let name = user.username {
             print("getting posts")
             getSubmissions(for: name)
@@ -29,28 +35,29 @@ class MyPostsTableViewController: UITableViewController {
         }
     }
 
+    
+    
 
     //MARK: - Request Reddit Data
     //request front page
     func getSubmissions(for username: String){
         print("getSubmissions called with username: \(username)")
         
-        var apiRequest = APICalls.redditRequest(endpoint: "/user/\(username)/submitted", token: user.accessToken )
-        
+        let apiRequest = APICalls.redditRequest(endpoint: "/user/\(username)/submitted", token: user.accessToken )
         
         
         APICalls.getJSON(via: apiRequest){
             [weak self] jsonSerialized in
             
             guard let json = jsonSerialized as? [String:Any] else { return }
-            
+
             self?.posts.removeAll(keepingCapacity: true)
             
             guard let listings = json["data"] as? [String:Any] else { return }
             
             for post in (listings["children"] as? Array<[String:Any]>)! {
                 if let postData = (post["data"] as? [String : Any]) {
-                    print(postData)
+//                    print(postData)
                     self?.posts.append(postData )
                 }
             }
@@ -71,23 +78,30 @@ extension MyPostsTableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return posts.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MyPostCell", for: indexPath) as! RedditPostTableCell
 
-        // Configure the cell...
+        let post = posts[indexPath.row]
+        
+        let title = post["title"] as? String
+        let author = post["subreddit"] as? String
+        
+        cell.postTitle.text = title
+        cell.subreddit.text = author
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
@@ -123,6 +137,13 @@ extension MyPostsTableViewController {
         return true
     }
     */
-
-
 }
+
+/*
+extension MyPostsTableViewController: TabBarSelectable {
+    //NOTE: this fires when unselected
+    func selectedByTabBar(){
+
+    }
+}
+ */
