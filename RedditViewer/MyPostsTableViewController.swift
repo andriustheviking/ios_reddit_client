@@ -81,19 +81,22 @@ class MyPostsTableViewController: UITableViewController {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         guard let id = segue.identifier else { return }
+        
         switch id {
-        case "newPostSegue":
-            //no need to handle
-            break
+        
+        case "newPostSegue":   fallthrough
         case "editPostSegue":
-            
-            guard let row = sender as? Int else { return }
             
             let vc = segue.destination as! PostViewController
             
-            vc.post = postData(post: posts[row])
+            vc.token = user.accessToken
             
+            if (id == "editPostSegue") {
+                guard let row = sender as? Int else { return }
+                vc.post = postData(post: posts[row])
+            }
         default:
             break
         }

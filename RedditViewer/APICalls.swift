@@ -25,7 +25,7 @@ class APICalls {
     //MARK: redditRequest()
     //makes a restful request to reddit's api.
     //host is automatically determined by token presence
-    static func redditRequest(endpoint: String, token: String?, method:String="GET", body:String="") -> URLRequest {
+    static func redditRequest(endpoint: String, token: String?, method:String="GET", body:String="", contentType:String="application/x-www-form-urlencoded") -> URLRequest {
         
         let host: String
         
@@ -46,7 +46,7 @@ class APICalls {
             request.setValue("bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue(contentType, forHTTPHeaderField: "Content-Type")
         request.setValue(Credentials.userAgent, forHTTPHeaderField: "User-Agent")
         
         request.httpBody = body.data(using: .utf8)

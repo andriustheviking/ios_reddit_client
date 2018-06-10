@@ -25,24 +25,20 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
         
         let nib = UINib.init(nibName: "UsersTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "usernameCell")
-        
-        print("UsersTableVC: viewDidLoad fired")
+
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        print("UsersTableVC: viewWillAppear fired")
-        
         getUsers()
     }
 
     fileprivate func getUsers(){
-        print("getUsers fired")
+
         if let loggedInUser = UserModel.currentUser {
             self.preambleLabel.text = "Logged In As:"
             self.userLabel.text = loggedInUser

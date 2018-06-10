@@ -97,8 +97,8 @@
 		09588FCD20CB49CB00B56813 /* MyInfo */ = {
 			isa = PBXGroup;
 			children = (
-				09588FCB20CB49C100B56813 /* MyPostsTableViewController.swift */,
 				09D4107720CC8C3A006830EA /* PostViewController.swift */,
+				09588FCB20CB49C100B56813 /* MyPostsTableViewController.swift */,
 				09E70EDA20CD98F5000090A8 /* EditProfileViewController.swift */,
 				09D4107A20CCD0E7006830EA /* UsersTableViewController.swift */,
 			);

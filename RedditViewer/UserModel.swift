@@ -120,7 +120,7 @@ class UserModel {
         }
         
         var results: [NSManagedObject] = []
-        print(results)
+
         //query coredata database
         do {
             results = try context.fetch(accountFetch)

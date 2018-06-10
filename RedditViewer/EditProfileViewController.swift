@@ -47,7 +47,4 @@ class EditProfileViewController: UIViewController {
         usernameLabel.text = username
     }
 
-
-
-
 }
