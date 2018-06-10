@@ -36,7 +36,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Subreddits" id="Nre-bL-YLF">
-                        <barButtonItem key="leftBarButtonItem" title="Print" id="82X-rg-7tm">
+                        <barButtonItem key="leftBarButtonItem" title="Show" id="82X-rg-7tm">
                             <connections>
                                 <action selector="something:" destination="BYZ-38-t0r" id="5bY-Zk-tiO"/>
                             </connections>
@@ -182,9 +182,14 @@
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="My Posts" id="yUC-Q7-frn">
+                        <barButtonItem key="leftBarButtonItem" title="Show" id="i3e-R6-LgX">
+                            <connections>
+                                <action selector="showPosts:" destination="rzY-On-4Re" id="D7D-zm-X00"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="nor-pX-7gX">
                             <connections>
-                                <segue destination="ObE-sv-rMf" kind="show" id="SJc-b1-NKo"/>
+                                <segue destination="ObE-sv-rMf" kind="show" identifier="newPostSegue" id="SJc-b1-NKo"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

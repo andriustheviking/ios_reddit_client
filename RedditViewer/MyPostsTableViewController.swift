@@ -36,6 +36,16 @@ class MyPostsTableViewController: UITableViewController {
     }
 
     
+    @IBAction func showPosts(_ sender: UIBarButtonItem) {
+        if let name = user.username {
+            print("getting posts")
+            getSubmissions(for: name)
+        }
+        else {
+            //TODO: Alert can't login
+            print("couldn't get posts")
+        }
+    }
     
 
     //MARK: - Request Reddit Data
@@ -67,6 +77,26 @@ class MyPostsTableViewController: UITableViewController {
             return
             }
         } //end of closure
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let id = segue.identifier else { return }
+        switch id {
+        case "newPostSegue":
+            //no need to handle
+            break
+        case "editPostSegue":
+            
+            guard let row = sender as? Int else { return }
+            
+            let vc = segue.destination as! PostViewController
+            
+            vc.post = postData(post: posts[row])
+            
+        default:
+            break
+        }
     }
 }
 
@@ -102,6 +132,9 @@ extension MyPostsTableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "editPostSegue", sender: indexPath.row)
+    }
 
     /*
     // Override to support conditional editing of the table view.
