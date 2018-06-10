@@ -17,7 +17,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     //MARK: TODO - refactor posts into data model
     var posts = Array<[String: Any]>()
     
-
     
     //MARK: Outlets
     @IBOutlet weak var redditFeedTableView: UITableView!
@@ -31,22 +30,32 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         redditFeedTableView.delegate = self
         redditFeedTableView.dataSource = self
         
-        if let _ = user.username {
-            getSubreddits()
+    }
+    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let token = user.accessToken {
+            getSubreddits(with: token)
+        }
+        else {
+            //clear out posts
+            posts.removeAll()
+            redditFeedTableView.reloadData()
+            
+            let alert = UIAlertController(title: nil, message: "You must be logged in", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil ))
+            self.present(alert, animated: true, completion: nil)
         }
     }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        print("viewWillLayoutSubviews fired")
-    }
-    
     
 
     //MARK: tester button
     @IBAction func something(_ sender: UIBarButtonItem) {
-    
-        getSubreddits()
+        if let token = user.accessToken {
+            getSubreddits(with: token)
+        }
     }
     
     
@@ -80,9 +89,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
 //MARK: - Request Reddit Data
     //request front page
-    func getSubreddits(){
+    func getSubreddits(with token: String){
         
-        APICalls.getJSON(via: APICalls.redditRequest(endpoint: "/subreddits/mine/subscriber", token: user.accessToken )){
+        APICalls.getJSON(via: APICalls.redditRequest(endpoint: "/subreddits/mine/subscriber", token: token)){
             [weak self] jsonObject in
 //            print(json)
             guard let json = jsonObject as? [String:Any] else { return }

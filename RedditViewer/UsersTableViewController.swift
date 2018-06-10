@@ -26,24 +26,34 @@ class UsersTableViewController: UIViewController, UITableViewDelegate, UITableVi
         let nib = UINib.init(nibName: "UsersTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "usernameCell")
         
+        print("UsersTableVC: viewDidLoad fired")
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        if let loggedInUser = UserModel.currentUser {
-            preambleLabel.text = "Logged In As:"
-            userLabel.text = loggedInUser
-        } else {
-            preambleLabel.text = ""
-            userLabel.text = "No Current Accounts"
-        }
+        print("UsersTableVC: viewWillAppear fired")
         
-        tableView.reloadData()
+        getUsers()
     }
 
+    fileprivate func getUsers(){
+        print("getUsers fired")
+        if let loggedInUser = UserModel.currentUser {
+            self.preambleLabel.text = "Logged In As:"
+            self.userLabel.text = loggedInUser
+        } else {
+            self.preambleLabel.text = ""
+            self.userLabel.text = "No Current Accounts"
+        }
+        self.tableView.reloadData()
+    }
+    
+    
     // MARK: - Table view data source
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -162,9 +172,10 @@ extension UsersTableViewController: OAuthCredentialDelegate {
             
             //asyncronously update CoreData
             if let json = jsonObject as? [String:Any]{
-                DispatchQueue.global(qos: .background).async {
-                    [weak self] in
-                    self?.user.saveCredentials(json)
+
+                self?.user.saveCredentials(json){
+                [weak self] in
+                    self?.getUsers()
                 }
             }
         }

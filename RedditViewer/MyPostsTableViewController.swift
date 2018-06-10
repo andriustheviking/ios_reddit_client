@@ -9,74 +9,74 @@
 import UIKit
 
 class MyPostsTableViewController: UITableViewController {
-
-    var user = UserModel() //gets user info at init
-    
+   
     var posts = Array<[String: Any]>()
+    
+    let user = UserModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.delegate = self
         tableView.dataSource = self
-
         
         //connect tablview to custom table cell
         let nib = UINib.init(nibName: "RedditPostTableCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "MyPostCell")
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         //get submitted posts
-        if let name = user.username {
-            print("getting posts")
-            getSubmissions(for: name)
-        }
-        else {
-            print("couldn't get posts")
-        }
+        getSubmissions()
     }
 
     
     @IBAction func showPosts(_ sender: UIBarButtonItem) {
-        if let name = user.username {
-            print("getting posts")
-            getSubmissions(for: name)
-        }
-        else {
-            //TODO: Alert can't login
-            print("couldn't get posts")
-        }
+        getSubmissions()
     }
     
 
     //MARK: - Request Reddit Data
     //request front page
-    func getSubmissions(for username: String){
-        print("getSubmissions called with username: \(username)")
+    func getSubmissions(){
         
-        let apiRequest = APICalls.redditRequest(endpoint: "/user/\(username)/submitted", token: user.accessToken )
-        
-        
-        APICalls.getJSON(via: apiRequest){
-            [weak self] jsonSerialized in
+        if let token = user.accessToken, let username = UserModel.currentUser {
             
-            guard let json = jsonSerialized as? [String:Any] else { return }
+            print("getSubmissions called with username: \(username)")
+            
+            let apiRequest = APICalls.redditRequest(endpoint: "/user/\(username)/submitted", token: token )
+            
+            
+            APICalls.getJSON(via: apiRequest){
+                [weak self] jsonSerialized in
+                
+                guard let json = jsonSerialized as? [String:Any] else { return }
 
-            self?.posts.removeAll(keepingCapacity: true)
-            
-            guard let listings = json["data"] as? [String:Any] else { return }
-            
-            for post in (listings["children"] as? Array<[String:Any]>)! {
-                if let postData = (post["data"] as? [String : Any]) {
-//                    print(postData)
-                    self?.posts.append(postData )
+                self?.posts.removeAll(keepingCapacity: true)
+                
+                guard let listings = json["data"] as? [String:Any] else { return }
+                
+                for post in (listings["children"] as? Array<[String:Any]>)! {
+                    if let postData = (post["data"] as? [String : Any]) {
+    //                    print(postData)
+                        self?.posts.append(postData )
+                    }
                 }
-            }
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
 
-            return
-            }
-        } //end of closure
+                return
+                }
+            } //end of closure
+        }
+        else {
+            posts.removeAll()
+            tableView.reloadData()
+            let alert = UIAlertController(title: nil, message: "You must be logged in", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil ))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     

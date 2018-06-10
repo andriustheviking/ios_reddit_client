@@ -34,6 +34,7 @@ class APICalls {
         } else {
             host = "https://www.reddit.com"
         }
+        print(host + endpoint)
         
         let url = URL.init(string: host + endpoint)
         

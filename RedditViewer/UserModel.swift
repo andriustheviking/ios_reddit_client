@@ -39,10 +39,10 @@ class UserModel {
     private var token: OAuthToken?
     private(set) var username: String?
     
-    
-    //returns accesstoken or nil if expired
-    var accessToken: String? {
+    var accessToken: String? {  //returns accesstoken or nil if expired
         get {
+            loadAccount(UserModel.currentUser)
+            
             if let expiration = token?.expires_in, expiration.timeIntervalSinceNow > 0 {
                 return token?.access_token
             }
@@ -50,6 +50,7 @@ class UserModel {
         }
         
     }
+    
     
     init() {
         dbContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -98,6 +99,7 @@ class UserModel {
             }
             if let account = results.first {
                 context.delete(account)
+                (UIApplication.shared.delegate as! AppDelegate).saveContext()
                 print(logoutName + " deleted")
                 loadAccount()
                 return true
@@ -118,7 +120,7 @@ class UserModel {
         }
         
         var results: [NSManagedObject] = []
-        
+        print(results)
         //query coredata database
         do {
             results = try context.fetch(accountFetch)
@@ -134,7 +136,7 @@ class UserModel {
     
     //MARK - Save Credentials
     //calls API to get username and updates existing or saves new
-    func saveCredentials(_ json: [String:Any] ){
+    func saveCredentials(_ json: [String:Any], completionBlock:@escaping () -> Void ) {
         
         token = OAuthToken(json: json)
         
@@ -174,8 +176,10 @@ class UserModel {
                 
                 self?.username = name
                 UserModel.currentUser = name
-                
                 print("UserModel: \(name) saved")
+                
+                completionBlock()
+                
             }
             
             return
