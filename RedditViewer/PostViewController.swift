@@ -1,3 +1,4 @@
+
 //
 //  PostViewController.swift
 //  RedditViewer
@@ -6,6 +7,7 @@
 //  Copyright © 2018 Andrius Kelly. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 struct postData {
@@ -28,8 +30,14 @@ struct postData {
     }
 }
 
+
+
+
 class PostViewController: UIViewController {
 
+    //TODO: refactor out user to MVC model
+    var user = UserModel()
+    
     //stores existing post data if available
     var post: postData? = nil
     
@@ -41,8 +49,23 @@ class PostViewController: UIViewController {
     
     
     @IBAction func submitPost(_ sender: UIButton) {
-        //if postName indicated, edit existing post
+        
+        guard let sr = subredditField.text,
+            let title = titleField.text,
+            let body = bodyTextField.text else { return }
+        
+        //if post, edit existing post
+        if let _ = post {
+            //updatePost()
+        }
+        else {
+            createPost(to: sr, title: title, body: body)
+        }
+        
+        
     }
+    
+    
     
     @IBAction func deletePost(_ sender: UIBarButtonItem) {
         if let _ = post {
@@ -64,5 +87,28 @@ class PostViewController: UIViewController {
             navBar.title = "Edit Post"
         }
     }
+}
 
+
+
+extension PostViewController {
+    
+    func createPost(to subreddit: String, title: String, body: String){
+        
+        var json = "{"
+        json += "\"api_type\":\"json\""
+        json += "\"sr\":\"\(subreddit)\","
+        json += "\"title\":\"\(title)\","
+        json += "\"text\":\"\(body)\"}"
+        
+
+        let submitRequest = APICalls.redditRequest(endpoint: "/api/submit", token: user.accessToken, method: "POST", body: json )
+        
+        APICalls.getJSON(via: submitRequest){
+            [weak self] serializedJson in
+            print (serializedJson as! [String:Any] )
+        }
+        
+
+    }
 }

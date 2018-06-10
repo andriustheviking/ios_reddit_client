@@ -11,10 +11,34 @@ import CoreData
 
 class UserModel {
     
+    //TODO: Refactor this out
+    //static var to track currently logged-in user
+    static var currentUser: String? = nil
+
+    //returns an array of usernames
+    static var usernames: Array<String> {
+        get {
+            
+            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+            let accountFetch = NSFetchRequest<NSManagedObject>(entityName: "Account")
+            
+            var results: [NSManagedObject] = []
+            
+            //query coredata database
+            do {
+                results = try context.fetch(accountFetch)
+            } catch {
+                print("error fetching accounts from coredata")
+            }
+            return results.filter({ ($0 as! Account).username != nil }).map({ ($0 as! Account).username! })
+        }
+    }
+    
     //MARK: Properties
     private var dbContext: NSManagedObjectContext?
     private var token: OAuthToken?
     private(set) var username: String?
+    
     
     //returns accesstoken or nil if expired
     var accessToken: String? {
@@ -28,15 +52,58 @@ class UserModel {
     }
     
     init() {
-        
         dbContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
+        loadAccount()
+    }
+    
+    
+    //loads account info from coredata database, or sets to nil
+    private func loadAccount(_ username: String?=nil){
         //load first account in core data
-        if let context = dbContext, let account = getFirstAccount(context: context, username: nil){
-            username = account.username
+        if let context = dbContext,
+        let account = getFirstAccount(context: context, username: username) {
+            
+            self.username = account.username
+            UserModel.currentUser = account.username
             
             token = OAuthToken(account: account)
         }
+        else {
+            self.username = nil
+            UserModel.currentUser = nil
+            token = nil
+        }
+    }
+    
+    
+    //deletes user profile, returns true if successful
+    func logout(user: String?) -> Bool{
+        //default to username if passed nil
+        let logoutName = user ?? self.username
+        
+        if let logoutName = logoutName, let context = dbContext {
+            
+            let accountFetch = NSFetchRequest<NSManagedObject>(entityName: "Account")
+            accountFetch.predicate = NSPredicate(format: "username == %@", logoutName)
+            
+            var results: [NSManagedObject] = []
+            
+            //query coredata database
+            do {
+                results = try context.fetch(accountFetch)
+            } catch {
+                print("error fetching accounts from coredata")
+                return false
+            }
+            if let account = results.first {
+                context.delete(account)
+                print(logoutName + " deleted")
+                loadAccount()
+                return true
+            }
+        }
+        return false
     }
     
 
@@ -101,11 +168,15 @@ class UserModel {
             account.expires = token.expires_in as NSDate?
             account.token = token.access_token
             
-            self?.username = name
-            
             (UIApplication.shared.delegate as! AppDelegate).saveContext()
             
-            print("UserModel: account saved")
+            DispatchQueue.main.async {
+                
+                self?.username = name
+                UserModel.currentUser = name
+                
+                print("UserModel: \(name) saved")
+            }
             
             return
         }

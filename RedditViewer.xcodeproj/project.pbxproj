@@ -28,8 +28,12 @@
 		09CA59A920C22CB30053D006 /* AuthorizationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CA59A820C22CB30053D006 /* AuthorizationToken.swift */; };
 		09D0C31220C231F3002AAA09 /* APICredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0C31120C231F3002AAA09 /* APICredentials.swift */; };
 		09D4107820CC8C3A006830EA /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D4107720CC8C3A006830EA /* PostViewController.swift */; };
+		09D4107B20CCD0E7006830EA /* UsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D4107A20CCD0E7006830EA /* UsersTableViewController.swift */; };
 		09D9000620C8B23C00320D13 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D9000520C8B23C00320D13 /* Comment.swift */; };
 		09DE27C120C886BC00A56775 /* CommentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DE27C020C886BC00A56775 /* CommentsTableViewController.swift */; };
+		09E70ED820CD9048000090A8 /* UsersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E70ED620CD9048000090A8 /* UsersTableViewCell.swift */; };
+		09E70ED920CD9048000090A8 /* UsersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09E70ED720CD9048000090A8 /* UsersTableViewCell.xib */; };
+		09E70EDB20CD98F5000090A8 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E70EDA20CD98F5000090A8 /* EditProfileViewController.swift */; };
 		09F8A2D420CC6B030083EBAB /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F8A2D320CC6B030083EBAB /* TabBarViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -57,8 +61,12 @@
 		09CA59A820C22CB30053D006 /* AuthorizationToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationToken.swift; sourceTree = "<group>"; };
 		09D0C31120C231F3002AAA09 /* APICredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APICredentials.swift; sourceTree = "<group>"; };
 		09D4107720CC8C3A006830EA /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		09D4107A20CCD0E7006830EA /* UsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTableViewController.swift; sourceTree = "<group>"; };
 		09D9000520C8B23C00320D13 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		09DE27C020C886BC00A56775 /* CommentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsTableViewController.swift; sourceTree = "<group>"; };
+		09E70ED620CD9048000090A8 /* UsersTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTableViewCell.swift; sourceTree = "<group>"; };
+		09E70ED720CD9048000090A8 /* UsersTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UsersTableViewCell.xib; sourceTree = "<group>"; };
+		09E70EDA20CD98F5000090A8 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		09F8A2D320CC6B030083EBAB /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,6 +99,8 @@
 			children = (
 				09588FCB20CB49C100B56813 /* MyPostsTableViewController.swift */,
 				09D4107720CC8C3A006830EA /* PostViewController.swift */,
+				09E70EDA20CD98F5000090A8 /* EditProfileViewController.swift */,
+				09D4107A20CCD0E7006830EA /* UsersTableViewController.swift */,
 			);
 			name = MyInfo;
 			sourceTree = "<group>";
@@ -141,6 +151,8 @@
 				093B3EA620C774C90069582C /* CommentTableViewCell.xib */,
 				0939885520C0C0A900EBE8ED /* RedditPostTableCell.swift */,
 				0939885620C0C0A900EBE8ED /* RedditPostTableCell.xib */,
+				09E70ED620CD9048000090A8 /* UsersTableViewCell.swift */,
+				09E70ED720CD9048000090A8 /* UsersTableViewCell.xib */,
 			);
 			name = TableCells;
 			sourceTree = "<group>";
@@ -207,6 +219,7 @@
 			files = (
 				09A844BE20B77EA4008371CC /* LaunchScreen.storyboard in Resources */,
 				093B3EA820C774C90069582C /* CommentTableViewCell.xib in Resources */,
+				09E70ED920CD9048000090A8 /* UsersTableViewCell.xib in Resources */,
 				09A844BB20B77EA4008371CC /* Assets.xcassets in Resources */,
 				0939885820C0C0A900EBE8ED /* RedditPostTableCell.xib in Resources */,
 				09A844B620B77EA4008371CC /* Main.storyboard in Resources */,
@@ -220,6 +233,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09E70EDB20CD98F5000090A8 /* EditProfileViewController.swift in Sources */,
 				0939885720C0C0A900EBE8ED /* RedditPostTableCell.swift in Sources */,
 				09D0C31220C231F3002AAA09 /* APICredentials.swift in Sources */,
 				09DE27C120C886BC00A56775 /* CommentsTableViewController.swift in Sources */,
@@ -230,6 +244,7 @@
 				09A844C620B77F65008371CC /* secret.swift in Sources */,
 				09A844B120B77EA4008371CC /* AppDelegate.swift in Sources */,
 				09A844B920B77EA4008371CC /* RedditViewer.xcdatamodeld in Sources */,
+				09E70ED820CD9048000090A8 /* UsersTableViewCell.swift in Sources */,
 				093B3EA420C760910069582C /* UserModel.swift in Sources */,
 				097AFB2E20C4AD2900B96376 /* APICalls.swift in Sources */,
 				09D4107820CC8C3A006830EA /* PostViewController.swift in Sources */,
@@ -238,6 +253,7 @@
 				09B64B0B20CB285C00D80459 /* SubredditViewController.swift in Sources */,
 				093B3EA720C774C90069582C /* CommentTableViewCell.swift in Sources */,
 				09102E6B20CA036000221FD6 /* NewCommentViewController.swift in Sources */,
+				09D4107B20CCD0E7006830EA /* UsersTableViewController.swift in Sources */,
 				09588FCC20CB49C100B56813 /* MyPostsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

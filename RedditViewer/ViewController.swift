@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ViewController: UIViewController, OAuthCredentialDelegate, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     
@@ -56,11 +56,6 @@ class ViewController: UIViewController, OAuthCredentialDelegate, UITableViewDele
         guard let id = segue.identifier else {return}
         
         switch id {
-
-        case "getAuthorization":
-            let vc = segue.destination as! OAuthViewController
-            vc.credentialDelegate = self
-        
 
         case "openSubreddit":
             let vc = segue.destination as! SubredditViewController
@@ -148,37 +143,6 @@ class ViewController: UIViewController, OAuthCredentialDelegate, UITableViewDele
     
     
     
-    //MARK - OAuthCredentialDelegate
-    //Requests OAuth Token with code and store json response via closure
-    func receivedCredentials(code: String? ){
-        guard let code = code else { return }
-        
-        var tokenRequest = APICalls.redditRequest(
-            endpoint: "/api/v1/access_token",
-            token: nil,
-            method: "POST",
-            body: "grant_type=authorization_code&code=\(code)&redirect_uri=\(Credentials.redirectURI)"
-        )
-        
-        //add authorization header user:pass as clientId:secret
-        let userPass = "\(Credentials.clientId):\(Credentials.secret)"
-        guard let base64UserPass: String = (userPass.data(using: .utf8)?.base64EncodedString()) else { return }
-        tokenRequest.setValue("Basic \(base64UserPass)", forHTTPHeaderField: "Authorization")
-        
-        APICalls.getJSON(via: tokenRequest) {
-            [weak self] jsonObject in
-            
-            //MARK: TODO - handle errors from reddit
-            
-            //asyncronously update CoreData
-            if let json = jsonObject as? [String:Any]{
-                DispatchQueue.global(qos: .background).async {
-                    [weak self] in
-                    self?.user.saveCredentials(json)
-                    self?.getSubreddits()
-                }
-            }
-        }
-    }
+
 }
 
